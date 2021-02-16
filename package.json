@@ -1,10 +1,11 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/ZhivotenkoAlex/nodejs/issues"
   },
-  "homepage": "https://github.com/ZhivotenkoAlex/nodejs#readme"
+  "homepage": "https://github.com/ZhivotenkoAlex/nodejs#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "shortid": "^2.2.16",
+    "yargs": "^16.2.0"
+  },
+  "description": ""
 }
