@@ -2,7 +2,7 @@ const fs = require("fs/promises");
 const path = require("path");
 const { v4: uuid } = require("uuid");
 
-const contactsPath = path.join(__dirname, "../db/contacts.json");
+const contactsPath = path.join(__dirname, "../model/contacts.json");
 const contactList = fs.readFile(contactsPath, "utf8");
 
 const listContacts = async () => {
@@ -12,7 +12,7 @@ const listContacts = async () => {
 const getContactById = async (contactId) => {
   const contacts = await listContacts();
   const contact = contacts.find(({id}) => String(id) === contactId);
-  return contact; 
+  return contact;
 };
 
 const removeContact = async (contactId) => {

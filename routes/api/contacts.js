@@ -71,7 +71,7 @@ router.delete('/:contactId', async (req, res, next) => {
    if (contact) {
       return res.json({
         status: "success",
-        code: 200, 
+        code: 200,
         data: {
           contact,
         },
