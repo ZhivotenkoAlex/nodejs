@@ -2,7 +2,8 @@ const Contacts=require('../model/contacts')
 
 const getAllContats= async (req, res, next) => {
   try {
-    const contacts = await Contacts.listContacts()
+    const userId=req.user.id
+    const contacts = await Contacts.listContacts(userId)
     return res.json({
       status: 'success',
       code: 200,
@@ -17,7 +18,8 @@ const getAllContats= async (req, res, next) => {
 
 const getContactByID = async (req, res, next) => {
   try {
-    const contact = await Contacts.getContactById(req.params.contactId);
+    const userId=req.user.id
+    const contact = await Contacts.getContactById(req.params.contactId,userId);
     if (contact) {
       return res.json({
         status: "success",
@@ -40,7 +42,8 @@ const getContactByID = async (req, res, next) => {
 
 const createContact= async (req, res, next) => {
   try {
-    const contact = await Contacts.addContact(req.body);
+    const userId=req.user.id
+    const contact = await Contacts.addContact({...req.body, owner:userId});
     if (contact) {
       return res.json({
         status: "success",
@@ -63,8 +66,9 @@ const createContact= async (req, res, next) => {
 
 
 const removeContact= async (req, res, next) => {
- try {
-   const contact = await Contacts.removeContact(req.params.contactId);
+  try {
+   const userId=req.user.id
+   const contact = await Contacts.removeContact(req.params.contactId,userId);
    if (contact) {
       return res.json({
         status: "success",
@@ -87,7 +91,7 @@ const removeContact= async (req, res, next) => {
 
 const updateContact= async (req, res, next) => {
   try {
-
+const userId=req.user.id
    if (Object.keys(req.body).length === 0) {
       return res.status(400).json({
         status: "missing fields",
@@ -95,7 +99,7 @@ const updateContact= async (req, res, next) => {
       });
    }
     
-    const contact = await Contacts.updateContact(req.params.contactId, req.body);
+    const contact = await Contacts.updateContact(req.params.contactId, req.body,userId);
     
    if (contact) {
       return res.json({
