@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const usersController = require('../../../controllers/usersControllers')
 const guard = require('../../../helpers/guard');
+const {accountLimiter} =require('../../../helpers/rateLimit')
 
-router.post('/register',usersController.reg)
+router.post('/register',accountLimiter,usersController.reg)
 router.post('/login',usersController.login)
 router.post('/logout', guard, usersController.logout)
 router.post('/current',guard,usersController.current)
