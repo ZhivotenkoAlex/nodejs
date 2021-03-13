@@ -42,23 +42,15 @@ const getContactByID = async (req, res, next) => {
 
 const createContact= async (req, res, next) => {
   try {
-    const userId=req.user.id
-    const contact = await Contacts.addContact({...req.body, owner:userId});
-    if (contact) {
-      return res.json({
-        status: "success",
-        code: 200,
-        data: {
-          contact,
-        },
-      });
-    } else {
-      return res.status(404).json({
-        status: "error",
-        code: 404,
-        data: "Not Found",
-      });
-    }
+    const userId = req.user.id
+    const contact = await Contacts.addContact({ ...req.body, owner: userId });
+    return res.status(201).json({
+      status: "success",
+      code: 201,
+      data: {
+        contact,
+      },
+    });
   } catch (e) {
     next(e);
   }
@@ -68,7 +60,7 @@ const createContact= async (req, res, next) => {
 const removeContact= async (req, res, next) => {
   try {
    const userId=req.user.id
-   const contact = await Contacts.removeContact(req.params.contactId,userId);
+   const contact = await Contacts.removeContact(req.params.id,userId);
    if (contact) {
       return res.json({
         status: "success",

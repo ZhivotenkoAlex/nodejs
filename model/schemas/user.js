@@ -5,17 +5,10 @@ const SALT_WORK_FACTOR = 8
 
 const userSchema = new Schema(
   {
-    subscription: {
-        type: String,
-        default: Subscription.FREE,
-        enum: {
-            values: [Subscription.FREE, Subscription.PREMIUM, Subscription.PRO],
-            message:"Not allowed subscription",
-        },
-    },
-    password: {
+    name: {
       type: String,
-      required: [true, 'Password required'],
+      minlength: 2,
+      default: 'Guest',
     },
     email: {
       type: String,
@@ -26,7 +19,18 @@ const userSchema = new Schema(
         return re.test(String(value).toLowerCase())
       },
     },
-    
+    password: {
+      type: String,
+      required: [true, 'Password required'],
+    },
+    subscription: {
+        type: String,
+        default: Subscription.FREE,
+        enum: {
+            values: [Subscription.FREE, Subscription.PREMIUM, Subscription.PRO],
+            message:"Not allowed subscription",
+        },
+    },
     token: {
       type: String,
       default: null,
