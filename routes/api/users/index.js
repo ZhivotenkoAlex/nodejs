@@ -7,6 +7,6 @@ const {accountLimiter} =require('../../../helpers/rateLimit')
 router.post('/register',accountLimiter,usersController.reg)
 router.post('/login',usersController.login)
 router.post('/logout', guard, usersController.logout)
-router.post('/current',guard,usersController.current)
+router.get('/current',guard, usersController.getCurrentUser);
 
 module.exports = router
