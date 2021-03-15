@@ -1,5 +1,7 @@
-const mongoose = require('mongoose')
-const { Schema,model } = mongoose
+const mongoose = require('mongoose');
+const { Subscription } = require('../../helpers/constants');
+const { Schema, model, SchemaTypes } = mongoose
+const mongoosePaginate = require('mongoose-paginate-v2');
  
 const contactSchema = new Schema({
     name: {
@@ -8,20 +10,35 @@ const contactSchema = new Schema({
         unique:true,
     },
     email: {
-        type: String,
-        required: [true, 'Set email for contact'],
-        unique:true,
+      type: String,
+      required: [true, 'Email required'],
+      unique: true,
+      validate(value) {
+        const re = /\S+@\S+\.\S+/
+        return re.test(String(value).toLowerCase())
+      },
     },
     phone: {
-        type: Number,
-        required: [true,'Set phone for contact'],
-        min: 5,
-        
+        type: String,
+        required: [true, 'Set phone for contact'],
+        unique: true,
+        validate: {
+        validator: v => /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(v),
+        message: props => `${props.value} is not a valid phone number!`,
+      },
+    },
+    subscription: {
+        type: String,
+        default: Subscription.FREE,
+        enum: {
+            values: [Subscription.FREE, Subscription.PREMIUM, Subscription.PRO],
+             message:"Not allowed subscription",
+        },
+       
     },
     owner: {
-        name: String,
-        age: Number,
-        address:String
+        type: SchemaTypes.ObjectId,
+        ref: 'user',
     },
 
 },
@@ -31,5 +48,6 @@ const contactSchema = new Schema({
     }
 );
  
+contactSchema.plugin(mongoosePaginate);
 const Contact = model('contact', contactSchema)
 module.exports=Contact
