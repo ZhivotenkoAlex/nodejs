@@ -52,6 +52,12 @@ const createContact= async (req, res, next) => {
       },
     });
   } catch (e) {
+    if (e.name === 'ValidationError' || e.name === 'MongoError') {
+      return next({
+        status: HttpCode.BAD_REQUEST,
+        message: e.message.replace(/"/g, ''),
+      });
+    }
     next(e);
   }
 }
