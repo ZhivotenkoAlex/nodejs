@@ -14,6 +14,11 @@ const updateToken = async (id, token) => {
   return await User.updateOne({ _id: id }, { token })
 }
 
+const updateAvatar = async (id, avatar,imgIdCloud) => {
+  return await User.updateOne({ _id: id }, { avatar,imgIdCloud })
+}
+
+
 const findByToken = async (token) => {
   return await User.findOne({ token });
 };
@@ -23,5 +28,6 @@ module.exports = {
     findById,
     create,
     updateToken,
-    findByToken
+    findByToken,
+    updateAvatar
 }
