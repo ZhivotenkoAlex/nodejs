@@ -25,7 +25,7 @@ class EmailService {
   }
   #createTemplate(verifyToken, name = 'Guest') {
     const mailGenerator = new this.#GenerateTemplate({
-      theme: 'neopolitan',
+      theme: 'salted',
       product: {
         name: 'System Contacts',
         link: this.link,
@@ -34,7 +34,7 @@ class EmailService {
     const template = {
       body: {
         name,
-        intro: 'Это у нас интро и где ты находишся?',
+        intro: 'Welcome to Globook',
         action: {
           instructions: 'Чтобы закончить регистрацию кликните на кнопку',
           button: {
@@ -49,12 +49,12 @@ class EmailService {
     }
     return mailGenerator.generate(template)
   }
-  async sendEmail(verifyToken, email, name) {
-    const emailBody = this.#createTemplate(verifyToken, name)
+  async sendEmail(verifyToken, email) {
+    const emailBody = this.#createTemplate(verifyToken)
     this.#sender.setApiKey(process.env.SENDGRID_API_KEY)
     const msg = {
       to: email,
-      from: 'no-reply@system-cats.com', // Use the email address or domain you verified above
+      from: 'info.aaa@meta.ua', // Use the email address or domain you verified above
       subject: 'Подтверждение регистрации',
       html: emailBody,
     }

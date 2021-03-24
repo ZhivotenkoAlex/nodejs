@@ -28,8 +28,8 @@ const findByVerifyToken = async (verifyToken) => {
   return await User.findOne({ verifyToken })
 }
 
-const updateVerifyToken = async (id, verifyToken) => {
-  return await User.findOneAndUpdate({ _id: id }, { verifyToken }) // [1]
+const updateVerifyToken = async (id, verify, verifyToken) => {
+  return await User.findOneAndUpdate({ _id: id }, { verify, verifyToken }) 
 }
 
 module.exports = {
